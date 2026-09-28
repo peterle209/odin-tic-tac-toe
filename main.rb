@@ -5,7 +5,7 @@ require_relative 'lib/game'
 def get_player_name(player_number)
   puts 'Please enter your name:'
   name = gets.chomp
-  if name.empty?
+  while name.empty?
     puts 'Please enter a non-empty string'
     name = gets.chomp
   end
@@ -22,7 +22,7 @@ end
 
 game = start_game
 
-while game.play_round
+while game.play_game
 end
 
 puts 'Thanks for playing!'

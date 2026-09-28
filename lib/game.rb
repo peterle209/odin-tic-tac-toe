@@ -13,18 +13,10 @@ class Game
     @turn = 1
   end
 
-  def play_round
+  def play_game
     print_game_status
-    until check_win || check_tie
-      advance_turn
-      update_board
-      print_game_status
-    end
-    if check_tie
-      handle_tie
-    else
-      handle_win
-    end
+    play_round
+    round_over
     puts 'Play again? (y/n)'
     return false if gets.chomp == 'n'
 
@@ -33,6 +25,22 @@ class Game
   end
 
   private
+
+  def play_round
+    until check_win || check_tie
+      advance_turn
+      update_board
+      print_game_status
+    end
+  end
+
+  def round_over
+    if check_tie
+      handle_tie
+    else
+      handle_win
+    end
+  end
 
   def game_reset
     @board.clear
@@ -67,10 +75,6 @@ class Game
     @turn > BOARDMAX
   end
 
-  def reset_board
-    @board.clear
-  end
-
   def print_game_status
     puts "Turn ##{@turn}: #{@player_one.name}"
     @board.current_board
@@ -101,7 +105,7 @@ class Game
   end
 
   def update_board
-    print "#{current_turn.name}, "
+    print "#{current_turn.name}: "
     curr_player_input = player_input
     @board.fill(curr_player_input[0], curr_player_input[1], @current_turn)
   end
